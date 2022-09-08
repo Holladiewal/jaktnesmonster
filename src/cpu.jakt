@@ -9,6 +9,19 @@ function sxb(value: u8) -> u16 {
     return value_16
 }
 
+enum AddressingMode {
+    IndirectX
+    ZeroPage
+    Immediate
+    Absolute
+    IndirectY
+    ZeroPageIndexed
+    AbsoluteY
+    AbsoluteX
+    Unknown
+    
+}
+
 class CPU {
     // registers
     public a: u8
@@ -52,163 +65,217 @@ class CPU {
 
     public function run_opcode(mut this) {
         let opcode = .system.read_byte(address: .pc)
-        match opcode {
-            0x00 => .brk()
-            0x01 => .ora(opcode)
-            0x05 => .ora(opcode)
-            0x06 => .asl(opcode)
-            0x08 => .php()
-            0x09 => .ora(opcode)
-            0x0a => .asl(opcode)
-            0x0d => .ora(opcode)
-            0x0e => .asl(opcode)
-            0x10 => .bpl()
-            0x11 => .ora(opcode)
-            0x15 => .ora(opcode)
-            0x16 => .asl(opcode)
-            0x18 => .clc()
-            0x19 => .ora(opcode)
-            0x1d => .ora(opcode)
-            0x1e => .asl(opcode)
-            0x20 => .jsr()
-            0x21 => .and_opcode(opcode)
-            0x24 => .bit(opcode)
-            0x25 => .and_opcode(opcode)
-            0x26 => .rol(opcode)
-            0x28 => .plp()
-            0x29 => .and_opcode(opcode)
-            0x2a => .rol(opcode)
-            0x2c => .bit(opcode)
-            0x2d => .and_opcode(opcode)
-            0x2e => .rol(opcode)
-            0x30 => .bmi()
-            0x31 => .and_opcode(opcode)
-            0x35 => .and_opcode(opcode)
-            0x36 => .rol(opcode)
-            0x38 => .sec()
-            0x39 => .and_opcode(opcode)
-            0x3d => .and_opcode(opcode)
-            0x3e => .rol(opcode)
-            0x40 => .rti()
-            0x41 => .eor(opcode)
-            0x45 => .eor(opcode)
-            0x46 => .lsr(opcode)
-            0x48 => .pha()
-            0x49 => .eor(opcode)
-            0x4a => .lsr(opcode)
-            0x4c => .jmp(opcode)
-            0x4d => .eor(opcode)
-            0x4e => .lsr(opcode)
-            0x50 => .bvc()
-            0x51 => .eor(opcode)
-            0x55 => .eor(opcode)
-            0x56 => .lsr(opcode)
-            0x58 => .cli()
-            0x59 => .eor(opcode)
-            0x5d => .eor(opcode)
-            0x5e => .lsr(opcode)
-            0x60 => .rts()
-            0x61 => .adc(opcode)
-            0x65 => .adc(opcode)
-            0x66 => .ror(opcode)
-            0x68 => .pla()
-            0x69 => .adc(opcode)
-            0x6a => .ror(opcode)
-            0x6c => .jmp(opcode)
-            0x6d => .adc(opcode)
-            0x6e => .ror(opcode)
-            0x70 => .bvs()
-            0x71 => .adc(opcode)
-            0x75 => .adc(opcode)
-            0x76 => .ror(opcode)
-            0x78 => .sei()
-            0x79 => .adc(opcode)
-            0x7d => .adc(opcode)
-            0x7e => .ror(opcode)
-            0x81 => .sta(opcode)
-            0x84 => .sty(opcode)
-            0x85 => .sta(opcode)
-            0x86 => .stx(opcode)
-            0x88 => .dey()
-            0x8a => .txa()
-            0x8c => .sty(opcode)
-            0x8d => .sta(opcode)
-            0x8e => .stx(opcode)
-            0x90 => .bcc()
-            0x91 => .sta(opcode)
-            0x94 => .sty(opcode)
-            0x95 => .sta(opcode)
-            0x96 => .stx(opcode)
-            0x98 => .tya()
-            0x99 => .sta(opcode)
-            0x9a => .txs()
-            0x9d => .sta(opcode)
-            0xa0 => .ldy(opcode)
-            0xa1 => .lda(opcode)
-            0xa2 => .ldx(opcode)
-            0xa4 => .ldy(opcode)
-            0xa5 => .lda(opcode)
-            0xa6 => .ldx(opcode)
-            0xa8 => .tay()
-            0xa9 => .lda(opcode)
-            0xaa => .tax()
-            0xac => .ldy(opcode)
-            0xad => .lda(opcode)
-            0xae => .ldx(opcode)
-            0xb0 => .bcs()
-            0xb1 => .lda(opcode)
-            0xb4 => .ldy(opcode)
-            0xb5 => .lda(opcode)
-            0xb6 => .ldx(opcode)
-            0xb8 => .clv()
-            0xb9 => .lda(opcode)
-            0xba => .tsx()
-            0xbc => .ldy(opcode)
-            0xbd => .lda(opcode)
-            0xbe => .ldx(opcode)
-            0xc0 => .cpy(opcode)
-            0xc1 => .cmp(opcode)
-            0xc4 => .cpy(opcode)
-            0xc5 => .cmp(opcode)
-            0xc6 => .dec(opcode)
-            0xc8 => .iny()
-            0xc9 => .cmp(opcode)
-            0xca => .dex()
-            0xcc => .cpy(opcode)
-            0xcd => .cmp(opcode)
-            0xce => .dec(opcode)
-            0xd0 => .bne()
-            0xd1 => .cmp(opcode)
-            0xd5 => .cmp(opcode)
-            0xd6 => .dec(opcode)
-            0xd8 => .cld()
-            0xd9 => .cmp(opcode)
-            0xdd => .cmp(opcode)
-            0xde => .dec(opcode)
-            0xe0 => .cpx(opcode)
-            0xe1 => .sbc(opcode)
-            0xe4 => .cpx(opcode)
-            0xe5 => .sbc(opcode)
-            0xe6 => .inc(opcode)
-            0xe8 => .inx()
-            0xe9 => .sbc(opcode)
-            0xea => .nop()
-            0xec => .cpx(opcode)
-            0xed => .sbc(opcode)
-            0xee => .inc(opcode)
-            0xf0 => .beq()
-            0xf1 => .sbc(opcode)
-            0xf5 => .sbc(opcode)
-            0xf6 => .inc(opcode)
-            0xf8 => .sed()
-            0xf9 => .sbc(opcode)
-            0xfd => .sbc(opcode)
-            0xfe => .inc(opcode)
-
+        
+        let a = opcode & 0xe0  // just some bits
+        let b = opcode & 0x1c  // opcode addressing mode (mostly)
+        let c = opcode & 0x03  // opcode category
+        
+        let addressing_mode = match b {
+            0 => AddressingMode::IndirectX
+            1 => AddressingMode::ZeroPage
+            2 => AddressingMode::Immediate
+            3 => AddressingMode::Absolute
+            4 => AddressingMode::IndirectY
+            5 => AddressingMode::ZeroPageIndexed
+            6 => AddressingMode::AbsoluteY
+            7 => AddressingMode::AbsoluteX
+            else => AddressingMode::Unknown
+        }
+        
+        match c {
+            0 => match a {
+                // Control operations
+                0 => match b {
+                    0 => .brk()
+                    1 => .nop(instr_size: 2, clock_cycles: 3) // illegal nop
+                    2 => .php()
+                    3 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop
+                    4 => .bpl()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .clc()
+                    7 => .nop() // illegal nop
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                        return
+                    }
+                }
+                1 => match b {
+                    0 => .jsr()
+                    1 => .bit(opcode) 
+                    2 => .plp()
+                    3 => .bit(opcode) 
+                    4 => .bmi()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .sec()
+                    7 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                2 => match b {
+                    0 => .rti()
+                    1 => .nop(instr_size: 2, clock_cycles: 3) // illegal nop
+                    2 => .pha()
+                    3 => .jmp(opcode) 
+                    4 => .bvc()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .cli()
+                    7 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                3 => match b {
+                    0 => .rts()
+                    1 => .nop(instr_size: 2, clock_cycles: 3) // illegal nop
+                    2 => .pla()
+                    3 => .jmp(opcode) 
+                    4 => .bvs()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .sei()
+                    7 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                4 => match b {
+                    0 => .nop(instr_size: 2)
+                    1 => .sty(opcode)
+                    2 => .dey()
+                    3 => .sty(opcode) 
+                    4 => .bcc()
+                    5 => .sty(opcode)
+                    6 => .tya()
+                    7 => .unknown_opcode(opcode) // illegal op shy
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                5 => match b {
+                    0 => .ldy(opcode)
+                    1 => .ldy(opcode)
+                    2 => .tay()
+                    3 => .ldy(opcode) 
+                    4 => .bcs()
+                    5 => .ldy(opcode)
+                    6 => .clv()
+                    7 => .ldy(opcode) 
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                6 => match b {
+                    0 => .cpy(opcode)
+                    1 => .cpy(opcode)
+                    2 => .iny()
+                    3 => .cpy(opcode) 
+                    4 => .bne()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .cld()
+                    7 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop 
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                7 => match b {
+                    0 => .cpx(opcode)
+                    1 => .cpx(opcode)
+                    2 => .inx()
+                    3 => .cpx(opcode) 
+                    4 => .beq()
+                    5 => .nop(instr_size: 2, clock_cycles: 4) // illegal nop
+                    6 => .sed()
+                    7 => .nop(instr_size: 3, clock_cycles: 4) // illegal nop 
+                    else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+                }
+                else => {
+                    eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                }
+            }
+            1 => match a {
+                0 => {.ora(opcode)}
+                1 => {.and_opcode(opcode)}
+                2 => {.eor(opcode)}
+                3 => {.adc(opcode)}
+                4 => match b {
+                    2 => .nop() // illegal nop
+                    else => .sta(opcode)
+                }
+                5 => {.lda(opcode)}
+                6 => {.cmp(opcode)}
+                7 => {.sbc(opcode)}
+                else => {
+                        eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                    }
+            }
+            2 => match a {
+                0 => match b {
+                    0 => .unknown_opcode(opcode)
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .asl(opcode)
+                }
+                1 => match b {
+                    0 => .unknown_opcode(opcode)
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .rol(opcode)
+                }
+                2 => match b {
+                    0 => .unknown_opcode(opcode)
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .lsr(opcode)
+                }
+                3 => match b {
+                    0 => .unknown_opcode(opcode)
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .ror(opcode)
+                }
+                4 => match b {
+                    0 => .nop() // illegal nop
+                    2 => .txa()
+                    4 => .unknown_opcode(opcode)
+                    6 => .txs()
+                    7 => .unknown_opcode(opcode)
+                    else => .stx(opcode)
+                }
+                5 => match b {
+                    2 => .tax()
+                    4 => .unknown_opcode(opcode)
+                    6 => .tsx() // illegal nop
+                    else => .ldx(opcode)
+                }
+                6 => match b {
+                    0 => .nop() // illegal nop
+                    2 => .dex()
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .dec(opcode)
+                }
+                7 => match b {
+                    0 => .nop() // illegal nop
+                    2 => .nop() // the real nop
+                    4 => .unknown_opcode(opcode)
+                    6 => .nop() // illegal nop
+                    else => .inc(opcode)
+                }
+                else => { 
+                    eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
+                }
+            }
+            3 => {
+            // Everything here is "illegal"
+                .unknown_opcode(opcode)
+            }
             else => {
-                eprintln("{:0>4x}: unknown opcode: {:0>2x}", .pc, opcode)
+                eprintln("Something gone seriously wrong here, this opcode physically cannot exist")
             }
         }
+        
     }
 
     // Interrupts
@@ -345,6 +412,10 @@ class CPU {
     function test_nz_flags(mut this, value: u8) {
         .negative = (value & 0x80) == 0x80
         .zero = value == 0
+    }
+    
+    function unknown_opcode(this, opcode: u8) {
+        eprintln("{:0>4x}: unknown opcode: {:0>2x}", .pc, opcode)
     }
 
     function ora(mut this, opcode: u8) {
@@ -1646,6 +1717,7 @@ class CPU {
         // The break flag is also supposed to be set during the PC push 
         .break_flag = true
         .push_word(value: .pc + 2)
+        eprintln("BRK, pushing PC: 0x{:0>x}", .pc + 2)
         .push_status()
 
         .clock += 7
@@ -1664,7 +1736,7 @@ class CPU {
     function jsr(mut this) {
         // We push the address just before the next opcode, which is pc + 2
         .push_word(value: .pc + 2)
-
+        eprintln("JSR, pushed {:0>4x}", .pc + 2)
         .clock += 6
 
         let arg_address = .pc + 1
@@ -1780,8 +1852,8 @@ class CPU {
         .clock += 2
     }
 
-    function nop(mut this) {
-        .pc += 1
-        .clock += 2
+    function nop(mut this, instr_size: u16 = 1, clock_cycles: u64 = 2) {
+        .pc += instr_size
+        .clock += clock_cycles
     }
 }

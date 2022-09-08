@@ -23,16 +23,18 @@ function main(args: [String]) {
         Success(system) => {
             mut cpu = CPU::init(system)
             mut debugger = Debugger::init(cpu)
-            for _ in 1..30000 {
-                // debugger.dump_cpu_state()
+            cpu.pc = 0x0c000
+            for _ in 1..300000 {
+                debugger.dump_cpu_state()
                 let in_vblank_before = system.ppu.in_vblank
 
                 let cpu_clocks_before = cpu.clock
                 cpu.run_opcode()
                 let cpu_clocks_after = cpu.clock
+                println("Result: 02h: {:0>2x} | 03h: {:0>2x}", cpu.system.read_byte(address: 0x02), cpu.system.read_byte(address: 0x03))
 
                 mut ppu = system.ppu
-                ppu.tick(cycles: (cpu_clocks_after - cpu_clocks_before) * 3)
+                //ppu.tick(cycles: (cpu_clocks_after - cpu_clocks_before) * 3)
                 let in_vblank_after = system.ppu.in_vblank
 
                 if not in_vblank_before and in_vblank_after and ppu.nmi_on_vblank {
