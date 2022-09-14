@@ -377,43 +377,43 @@ class CPU {
         match opcode {
             0x09 => {
                 .a = .a | .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
             }
             0x05 => {
                 .a = .a | .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
             }
             0x15 => {
                 .a = .a | .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
             }
             0x01 => {
                 .a = .a | .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
             }
             0x11 => {
                 .a = .a | .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
             }
             0x0d => {
                 .a = .a | .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x1d => {
                 .a = .a | .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x19 => {
                 .a = .a | .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             else => {
                 eprintln("{:0>4x}: unknown opcode", .pc)
@@ -426,43 +426,43 @@ class CPU {
         match opcode {
             0x29 => {
                 .a = .a & .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
             }
             0x25 => {
                 .a = .a & .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
             }
             0x35 => {
                 .a = .a & .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
             }
             0x21 => {
                 .a = .a & .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
             }
             0x31 => {
                 .a = .a & .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
             }
             0x2d => {
                 .a = .a & .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x3d => {
                 .a = .a & .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x39 => {
                 .a = .a & .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             else => {
                 eprintln("{:0>4x}: unknown opcode", .pc)
@@ -475,43 +475,43 @@ class CPU {
         match opcode {
             0x49 => {
                 .a = .a ^ .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
             }
             0x45 => {
                 .a = .a ^ .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
             }
             0x55 => {
                 .a = .a ^ .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
             }
             0x41 => {
                 .a = .a ^ .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
             }
             0x51 => {
                 .a = .a ^ .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
             }
             0x4d => {
                 .a = .a ^ .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x5d => {
                 .a = .a ^ .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             0x59 => {
                 .a = .a ^ .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
             }
             else => {
                 eprintln("{:0>4x}: unknown opcode", .pc)
@@ -542,50 +542,50 @@ class CPU {
         let operand = match opcode {
             0x69 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
                 yield tmp
             }
             0x65 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
                 yield tmp
             }
             0x75 => {
                 let tmp = .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
                 yield tmp
             }
             0x61 => {
                 let tmp = .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
                 yield tmp
             }
             0x71 => {
                 let tmp = .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
                 yield tmp
             }
             0x6d => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0x7d => {
                 let tmp = .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0x79 => {
                 let tmp = .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             else => {
@@ -601,50 +601,50 @@ class CPU {
         let operand = match opcode {
             0xe9 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
                 yield tmp
             }
             0xe5 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
                 yield tmp
             }
             0xf5 => {
                 let tmp = .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
                 yield tmp
             }
             0xe1 => {
                 let tmp = .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
                 yield tmp
             }
             0xf1 => {
                 let tmp = .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
                 yield tmp
             }
             0xed => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0xfd => {
                 let tmp = .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0xf9 => {
                 let tmp = .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             else => {
@@ -660,50 +660,50 @@ class CPU {
         let operand = match opcode {
             0xc9 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
                 yield tmp
             }
             0xc5 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
                 yield tmp
+                .clock += 3
             }
             0xd5 => {
                 let tmp = .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
                 yield tmp
             }
             0xc1 => {
                 let tmp = .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
                 yield tmp
             }
             0xd1 => {
                 let tmp = .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 5
                 .pc += 2
+                .clock += 5
                 yield tmp
             }
             0xcd => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0xdd => {
                 let tmp = .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             0xd9 => {
                 let tmp = .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
                 yield tmp
             }
             else => {
@@ -719,20 +719,20 @@ class CPU {
         let intermediate = match opcode {
             0xe0 => {
                 let tmp = .x as! i16 - .immediate() as! i16
-                .clock += 2
                 .pc += 2
+                .clock += 2
                 yield tmp
             }
             0xe4 => {
                 let tmp = .x as! i16 - .zero_page() as! i16
-                .clock += 3
                 .pc += 2
+                .clock += 3
                 yield tmp
             }
             0xec => {
                 let tmp = .x as! i16 - .absolute() as! i16
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
@@ -750,20 +750,20 @@ class CPU {
         let intermediate = match opcode {
             0xc0 => {
                 let tmp = .y as! i16 - .immediate() as! i16 
-                .clock += 2
                 .pc += 2
+                .clock += 2
                 yield tmp
             }
             0xc4 => {
                 let tmp = .y as! i16 - .zero_page() as! i16
-                .clock += 3
                 .pc += 2
+                .clock += 3
                 yield tmp
             }
             0xcc => {
                 let tmp = .y as! i16 - .absolute() as! i16
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
@@ -822,17 +822,17 @@ class CPU {
     }
 
     function dex(mut this) {
-        .pc += 1
-        .clock += 2
         .x--
         .test_nz_flags(value: .x)
+        .pc += 1
+        .clock += 2
     }
 
     function dey(mut this) {
-        .pc += 1
-        .clock += 2
         .y--
         .test_nz_flags(value: .y)
+        .pc += 1
+        .clock += 2
     }
 
     function inc(mut this, opcode: u8) {
@@ -880,17 +880,17 @@ class CPU {
     }
 
     function inx(mut this) {
-        .pc += 1
-        .clock += 2
         .x++
         .test_nz_flags(value: .x)
+        .pc += 1
+        .clock += 2
     }
 
     function iny(mut this) {
-        .pc += 1
-        .clock += 2
         .y++
         .test_nz_flags(value: .y)
+        .pc += 1
+        .clock += 2
     }
 
     function asl(mut this, opcode: u8) {
@@ -1111,57 +1111,57 @@ class CPU {
         let intermediate: u8 = match opcode {
             0xa9 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
 
                 yield tmp
             }
             0xa5 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
 
                 yield tmp
             }
             0xb5 => {
                 let tmp = .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
 
                 yield tmp
             }
             0xad => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
             0xbd => {
                 let tmp = .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
             0xb9 => {
                 let tmp = .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
             0xa1 => {
                 let tmp = .indirect_zero_page_x()
-                .clock += 6
                 .pc += 2
+                .clock += 6
 
                 yield tmp
             }
             0xb1 => {
                 let tmp = .indirect_zero_page_y(check_extra_clock: true)
-                .clock += 6
                 .pc += 2
+                .clock += 6
 
                 yield tmp
             }
@@ -1181,36 +1181,36 @@ class CPU {
         let intermediate: u8 = match opcode {
             0xa2 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
 
                 yield tmp
             }
             0xa6 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
 
                 yield tmp
             }
             0xb6 => {
                 let tmp = .zero_page_y()
-                .clock += 4
                 .pc += 2
+                .clock += 4
 
                 yield tmp
             }
             0xae => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
             0xbe => {
                 let tmp = .absolute_y(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
@@ -1232,36 +1232,36 @@ class CPU {
         let intermediate: u8 = match opcode {
             0xa0 => {
                 let tmp = .immediate()
-                .clock += 2
                 .pc += 2
+                .clock += 2
 
                 yield tmp
             }
             0xa4 => {
                 let tmp = .zero_page()
-                .clock += 3
                 .pc += 2
+                .clock += 3
 
                 yield tmp
             }
             0xb4 => {
                 let tmp = .zero_page_x()
-                .clock += 4
                 .pc += 2
+                .clock += 4
 
                 yield tmp
             }
             0xac => {
                 let tmp = .absolute()
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
             0xbc => {
                 let tmp = .absolute_x(check_extra_clock: true)
-                .clock += 4
                 .pc += 3
+                .clock += 4
 
                 yield tmp
             }
@@ -1575,8 +1575,8 @@ class CPU {
         if not .negative {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1584,8 +1584,8 @@ class CPU {
         if .negative {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1593,8 +1593,8 @@ class CPU {
         if not .overflow {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1602,8 +1602,8 @@ class CPU {
         if .overflow {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1611,8 +1611,8 @@ class CPU {
         if not .carry {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1620,8 +1620,8 @@ class CPU {
         if .carry {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1629,8 +1629,8 @@ class CPU {
         if not .zero {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
@@ -1638,8 +1638,8 @@ class CPU {
         if .zero {
             .branch()
         } else {
-            .clock += 2
             .pc += 2
+            .clock += 2
         }
     }
 
